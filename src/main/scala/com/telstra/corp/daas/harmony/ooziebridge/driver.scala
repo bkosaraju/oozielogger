@@ -1,15 +1,13 @@
 package com.telstra.corp.daas.harmony.ooziebridge
 
-import com.fasterxml.jackson.databind.DeserializationFeature
 import org.slf4j.LoggerFactory
-import javax.jms.{Connection, ConnectionConsumer, ConnectionFactory, Session, TextMessage}
-import org.apache.activemq.command.{ActiveMQTextMessage, ActiveMQTopic}
-
-
 
 object driver extends loadproperties
-  with jsonMapper
-  with jmsConnection {
+  with jmsConnection
+  with dbConnection
+  with workFlowJobLoader
+  with slaMessageLogLoader
+  with messageConsumer {
 
   def main(args: Array[String]): Unit = {
 
@@ -17,33 +15,13 @@ object driver extends loadproperties
     val customPropertyFile = if ( args.length == 0 ) "" else args(0).toString
     var props = loadParms(customPropertyFile)
 
-    val topicName = props.getProperty ("topicName", "TEST")
-    val destinationTopic = new ActiveMQTopic (topicName)
+    val consumer = SessionLoader(props)
+    val jdbcTemplate = getConnection(props)
 
-    val session = SessionLoader(props)
+    logger.info("Started Reading the messages")
+    messageConsumer(consumer,jdbcTemplate)
+    logger.info("Cloning the connection")
 
-    val consumer = session.createDurableSubscriber(destinationTopic,"OozieBridge")
-    val publisher = session.createProducer(destinationTopic)
-
-    val producer = session.createProducer(destinationTopic)
-    case class cjson (Key1: String, Key2: String)
-    //val jObj = mapper.readValue(txtMessage,cjson.getClass)
-    //println(jObj)
-
-    println("Started Reading the messages")
-
-
-      while (true) {
-        val txtMessage="{\"key1\" : \"Value1\", \"key2\" : \"Value2\"}"
-        var payload = session.createTextMessage()
-        payload.setText(txtMessage)
-        publisher.send(payload)
-         val msg = consumer.receive(1000).asInstanceOf[ActiveMQTextMessage]
-        val Data = msg.getText
-        val jObj = mapper.readTree(Data)
-        println(jObj.get("key1").asText())
-      }
-  publisher.close()
   consumer.close()
   }
 }
