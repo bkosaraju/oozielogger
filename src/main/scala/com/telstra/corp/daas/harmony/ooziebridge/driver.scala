@@ -20,10 +20,10 @@ object driver extends loadproperties
 
     createDBSchema(jdbcTemplate,props.getProperty("jdbcType"))
 
-//    val consumer = SessionLoader(props)
-//    logger.info("Started Reading the messages")
-//    messageConsumer(consumer,jdbcTemplate)
-//    logger.info("Cloning the connection")
-//    consumer.close()
+    val consumer = SessionLoader(props)
+    logger.info("Started Reading the messages")
+    messageConsumer(consumer,jdbcTemplate)
+    logger.info("Cloning the connection")
+    consumer.close()
   }
 }

@@ -1,7 +1,7 @@
 plugins {
     // Apply the scala plugin to add support for Scala
     id 'scala'
-    id "com.github.johnrengelman.shadow" version "1.2.3"
+    id "com.github.johnrengelman.shadow" version "2.0.4" //for UBER JAR
     id "jacoco"
     id "java"
     id "com.adarshr.test-logger" version "1.3.0" //pretty test report
@@ -55,9 +55,9 @@ dependencies {
 
 }
 
-shadowJar {
-    configurations = [project.configurations.assembly]
-}
+//shadowJar {
+//    configurations = [project.configurations.assembly]
+//}
 
 
 testlogger {
