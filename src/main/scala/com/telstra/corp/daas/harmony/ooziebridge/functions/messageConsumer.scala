@@ -7,9 +7,11 @@ import org.apache.oozie.client.event.Event.MessageType
 import org.apache.oozie.client.event.jms.JMSHeaderConstants
 import org.springframework.jdbc.core.JdbcTemplate
 
+
 trait messageConsumer extends session {
 
   def messageConsumer(consumer: MessageConsumer, jdbcTemplate : JdbcTemplate ): Unit = {
+
     while (true) {
       consumer.setMessageListener(new MessageListener() {
         override def onMessage(message: Message): Unit = {

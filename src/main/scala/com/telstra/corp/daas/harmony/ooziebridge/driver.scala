@@ -7,7 +7,8 @@ object driver extends loadproperties
   with dbConnection
   with workFlowJobLoader
   with slaMessageLogLoader
-  with messageConsumer {
+  with messageConsumer
+  with initialDbSetup {
 
   def main(args: Array[String]): Unit = {
 
@@ -15,13 +16,14 @@ object driver extends loadproperties
     val customPropertyFile = if ( args.length == 0 ) "" else args(0).toString
     var props = loadParms(customPropertyFile)
 
-    val consumer = SessionLoader(props)
     val jdbcTemplate = getConnection(props)
 
-    logger.info("Started Reading the messages")
-    messageConsumer(consumer,jdbcTemplate)
-    logger.info("Cloning the connection")
+    createDBSchema(jdbcTemplate,props.getProperty("jdbcType"))
 
-  consumer.close()
+//    val consumer = SessionLoader(props)
+//    logger.info("Started Reading the messages")
+//    messageConsumer(consumer,jdbcTemplate)
+//    logger.info("Cloning the connection")
+//    consumer.close()
   }
 }
