@@ -25,15 +25,22 @@ uploadArchives {
             }
 
             pom.project {
-                name 'utils'
+                name 'oozielogger'
                 packaging 'jar'
                 // optionally artifactId can be defined here
-                description 'Utils is a library for Application collection of utilities for trigger and track spark Application in Kubernetes, Databricks and EMR with some additinoal functions'
-                url 'https://bkosaraju.github.io/utils'
+                description '\n' +
+                        'Oozielogger is a application to continuously replicate oozie events into mysql/postgres databes.\n' +
+                        '\n' +
+                        'this includes any of \n' +
+                        '    coordinator start, stop, failure, SLA etc..\n' +
+                        '    workflow  start, stop, failure, SLA evts \n' +
+                        '\n' +
+                        'this basically consume Oozie\'s ActiveMQ queue and post back to database so that, end user reporting can happen.\n'
+                url 'https://bkosaraju.github.io/oozielogger'
 
                 scm {
-                    connection 'scm:git:https://github.com/bkosaraju/utils.git'
-                    url 'https://github.com/bkosaraju/utils'
+                    connection 'scm:git:https://github.com/bkosaraju/oozielogger.git'
+                    url 'https://github.com/bkosaraju/oozielogger'
                 }
 
                 licenses {
@@ -55,7 +62,7 @@ uploadArchives {
 }
 
 /*
- *   Copyright (C) 2019-2020 bkosaraju
+ *   Copyright (C) 2018-2020 bkosaraju
  *   All Rights Reserved.
  *
  *   Licensed to the Apache Software Foundation (ASF) under one
