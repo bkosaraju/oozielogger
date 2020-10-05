@@ -1,0 +1,10 @@
+.project
+.settings/
+.vscode/
+.idea
+.travis.yml
+.gradle/
+.DS_Store
+build/
+out/
+move.sh
