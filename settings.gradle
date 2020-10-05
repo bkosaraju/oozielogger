@@ -23,8 +23,8 @@
 pluginManagement {
     repositories {
         maven {
-            url ('https://plugins.gradle.org/m2/')
-            //url((System.getenv("ARTIFACTORY_URL") ?: "https://plugins.gradle.org/m2/"))
+            //url ('https://plugins.gradle.org/m2/')
+            url((System.getenv("ARTIFACTORY_URL") ?: "https://plugins.gradle.org/m2/"))
             if (System.getenv("ARTIFACTORY_USER") || Project.hasProperty('artifactoryUser') ) {
                 credentials {
                     username = System.getenv("ARTIFACTORY_USER") ?: artifactoryUser
@@ -37,6 +37,5 @@ pluginManagement {
 
 gradle.ext.projectGroup = "io.github.bkosaraju"
 gradle.ext.projectName = "oozielogger"
-gradle.ext.artifactoryUrl = 'https://repo1.maven.org/maven2/'
-//System.getenv("ARTIFACTORY_URL") ?: "https://repo1.maven.org/maven2/"
+gradle.ext.artifactoryUrl =System.getenv("ARTIFACTORY_URL") ?: "https://repo1.maven.org/maven2/"
 rootProject.setName(gradle.ext.projectName)
