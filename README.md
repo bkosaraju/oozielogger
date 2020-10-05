@@ -1,4 +1,4 @@
-# Pipeline
+# Oozielogger
 
 Oozielogger is a application to continuously replicate oozie events into mysql/postgres databes.
 
